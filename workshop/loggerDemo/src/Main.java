@@ -12,7 +12,7 @@ public class Main {
 	public static void main(String[] args) throws Exception {
 
 		UserUI userUI = new UserUI(
-				new ProductManager(new JdbcProductDao(), new BaseLogger[] { new SmsLogger() }));
+				new ProductManager(new HibernateProductDao(), new BaseLogger[] { new FileLogger(), new FileLogger()}));
 
 		Product product = new Product();
 

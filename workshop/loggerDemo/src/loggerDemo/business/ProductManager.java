@@ -8,10 +8,11 @@ import loggerDemo.entities.Product;
 
 public class ProductManager implements ProductService {
 
-	ProductDao productDao;
-	BaseLogger[] baseLoggers;
+	private ProductDao productDao;
+	private BaseLogger[] baseLoggers;
 
-	public ProductManager(ProductDao productDao, BaseLogger[] baseLoggers) {
+	
+	public ProductManager() {
 
 		this.productDao = productDao;
 		this.baseLoggers = baseLoggers;
