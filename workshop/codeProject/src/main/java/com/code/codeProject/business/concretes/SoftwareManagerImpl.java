@@ -20,7 +20,11 @@ public class SoftwareManagerImpl implements SoftwareLanguageService {
 
 	@Override
 	public void add(SoftwareLanguage softwareLanguage) {
-		languageRepository.add(softwareLanguage);
+		
+		if (softwareLanguage.getName() != "" && softwareLanguage.getName() == "Java") {
+			languageRepository.add(softwareLanguage);
+		}
+		
 
 	}
 
