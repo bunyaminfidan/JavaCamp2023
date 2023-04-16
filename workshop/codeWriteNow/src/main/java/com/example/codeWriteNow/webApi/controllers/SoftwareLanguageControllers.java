@@ -10,9 +10,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.codeWriteNow.business.abstracts.SoftwareLanguageService;
-import com.example.codeWriteNow.business.requests.CreateSoftwareLanguage;
-import com.example.codeWriteNow.business.requests.DeleteSoftwareLanguage;
-import com.example.codeWriteNow.business.requests.UpdateSoftwareLanguage;
+import com.example.codeWriteNow.business.requests.SoftwareLanguages.CreateSoftwareLanguage;
+import com.example.codeWriteNow.business.requests.SoftwareLanguages.DeleteSoftwareLanguage;
+import com.example.codeWriteNow.business.requests.SoftwareLanguages.UpdateSoftwareLanguage;
 import com.example.codeWriteNow.business.responses.SoftwareLanguages.GetAllSoftwareLanguage;
 import com.example.codeWriteNow.business.responses.SoftwareLanguages.GetByIdSoftwareLanguage;
 
