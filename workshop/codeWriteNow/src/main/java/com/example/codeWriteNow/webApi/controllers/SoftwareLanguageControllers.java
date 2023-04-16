@@ -20,8 +20,8 @@ import com.example.codeWriteNow.business.responses.SoftwareLanguages.GetByIdSoft
 @RequestMapping("/api/softwarelanguages")
 public class SoftwareLanguageControllers {
 
-	@Autowired
-	private SoftwareLanguageService softwareLanguageService;
+	
+	private final SoftwareLanguageService softwareLanguageService;
 
 	public SoftwareLanguageControllers(SoftwareLanguageService softwareLanguageService) {
 
