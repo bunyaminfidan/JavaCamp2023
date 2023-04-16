@@ -13,8 +13,8 @@ import com.example.codeWriteNow.business.abstracts.SoftwareLanguageService;
 import com.example.codeWriteNow.business.requests.CreateSoftwareLanguage;
 import com.example.codeWriteNow.business.requests.DeleteSoftwareLanguage;
 import com.example.codeWriteNow.business.requests.UpdateSoftwareLanguage;
-import com.example.codeWriteNow.business.responses.GetAllSoftwareLanguage;
-import com.example.codeWriteNow.business.responses.GetByIdSoftwareLanguage;
+import com.example.codeWriteNow.business.responses.SoftwareLanguages.GetAllSoftwareLanguage;
+import com.example.codeWriteNow.business.responses.SoftwareLanguages.GetByIdSoftwareLanguage;
 
 @RestController
 @RequestMapping("/api/softwarelanguages")
