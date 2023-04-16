@@ -1,12 +1,10 @@
 package com.camp.carRental.dataAccess.abstracts;
 
-import java.util.List;
+
+import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.camp.carRental.entities.concretes.Brand;
 
-
-public interface BrandRepository {
-
-	List<Brand> getAll();
+public interface BrandRepository extends JpaRepository<Brand, Integer> {
 
 }
