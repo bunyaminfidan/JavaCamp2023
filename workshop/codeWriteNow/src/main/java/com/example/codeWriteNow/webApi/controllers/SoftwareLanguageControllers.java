@@ -10,18 +10,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.codeWriteNow.business.abstracts.SoftwareLanguageService;
-import com.example.codeWriteNow.business.requests.CreateSoftwareLanguage;
-import com.example.codeWriteNow.business.requests.DeleteSoftwareLanguage;
-import com.example.codeWriteNow.business.requests.UpdateSoftwareLanguage;
-import com.example.codeWriteNow.business.responses.GetAllSoftwareLanguage;
-import com.example.codeWriteNow.business.responses.GetByIdSoftwareLanguage;
+import com.example.codeWriteNow.business.requests.SoftwareLanguages.CreateSoftwareLanguageRequest;
+import com.example.codeWriteNow.business.requests.SoftwareLanguages.DeleteSoftwareLanguageRequest;
+import com.example.codeWriteNow.business.requests.SoftwareLanguages.UpdateSoftwareLanguageRequest;
+import com.example.codeWriteNow.business.responses.SoftwareLanguages.GetAllSoftwareLanguageResponse;
+import com.example.codeWriteNow.business.responses.SoftwareLanguages.GetByIdSoftwareLanguageResponse;
 
 @RestController
 @RequestMapping("/api/softwarelanguages")
 public class SoftwareLanguageControllers {
 
-	@Autowired
-	private SoftwareLanguageService softwareLanguageService;
+	
+	private final SoftwareLanguageService softwareLanguageService;
 
 	public SoftwareLanguageControllers(SoftwareLanguageService softwareLanguageService) {
 
@@ -29,27 +29,27 @@ public class SoftwareLanguageControllers {
 	}
 
 	@GetMapping("/getall")
-	public List<GetAllSoftwareLanguage> getAll() {
+	public List<GetAllSoftwareLanguageResponse> getAll() {
 		return softwareLanguageService.getAll();
 	}
 
 	@GetMapping("/getbyid")
-	public GetByIdSoftwareLanguage getById(int id) {
+	public GetByIdSoftwareLanguageResponse getById(int id) {
 		return softwareLanguageService.getById(id);
 	}
 
 	@PostMapping("/add")
-	public void add(CreateSoftwareLanguage createSoftwareLanguage) {
+	public void add(CreateSoftwareLanguageRequest createSoftwareLanguage) {
 		softwareLanguageService.add(createSoftwareLanguage);
 	}
 
 	@DeleteMapping("/delete")
-	public void delete(DeleteSoftwareLanguage deleteSoftwareLanguage) {
+	public void delete(DeleteSoftwareLanguageRequest deleteSoftwareLanguage) {
 		softwareLanguageService.delete(deleteSoftwareLanguage);
 	}
 
 	@PostMapping("/update")
-	public void update(UpdateSoftwareLanguage updateSoftwareLanguage) {
+	public void update(UpdateSoftwareLanguageRequest updateSoftwareLanguage) {
 		softwareLanguageService.update(updateSoftwareLanguage);
 	}
 
