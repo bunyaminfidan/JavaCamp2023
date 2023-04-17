@@ -16,17 +16,14 @@ import com.example.codeWriteNow.business.requests.SoftwareLanguages.UpdateSoftwa
 import com.example.codeWriteNow.business.responses.SoftwareLanguages.GetAllSoftwareLanguageResponse;
 import com.example.codeWriteNow.business.responses.SoftwareLanguages.GetByIdSoftwareLanguageResponse;
 
+import lombok.AllArgsConstructor;
+
 @RestController
 @RequestMapping("/api/softwarelanguages")
+@AllArgsConstructor
 public class SoftwareLanguageControllers {
 
-	
 	private final SoftwareLanguageService softwareLanguageService;
-
-	public SoftwareLanguageControllers(SoftwareLanguageService softwareLanguageService) {
-
-		this.softwareLanguageService = softwareLanguageService;
-	}
 
 	@GetMapping("/getall")
 	public List<GetAllSoftwareLanguageResponse> getAll() {

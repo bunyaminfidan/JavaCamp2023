@@ -20,21 +20,18 @@ import com.example.codeWriteNow.entities.SoftwareLanguage;
 import com.example.codeWriteNow.repositories.abstracts.LanguageSubtitleRepository;
 import com.example.codeWriteNow.repositories.abstracts.SoftwareLanguageRepository;
 
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @Service
-@Slf4j
+@Slf4j //for log
+@AllArgsConstructor
 public class LanguageSubtitleManager implements LanguageSubtitleService {
 
 	private LanguageSubtitleRepository subtitleRepository;
 	private SoftwareLanguageRepository languageRepository;
 
-	public LanguageSubtitleManager(LanguageSubtitleRepository subtitleRepository,
-			SoftwareLanguageRepository languageRepository) {
-		super();
-		this.subtitleRepository = subtitleRepository;
-		this.languageRepository = languageRepository;
-	}
+
 
 	@Override
 	public List<GetAllLanguageSubtitleResponse> getAll() {

@@ -16,7 +16,10 @@ import com.example.codeWriteNow.business.responses.SoftwareLanguages.GetByIdSoft
 import com.example.codeWriteNow.entities.SoftwareLanguage;
 import com.example.codeWriteNow.repositories.abstracts.SoftwareLanguageRepository;
 
+import lombok.AllArgsConstructor;
+
 @Service
+@AllArgsConstructor
 public class SoftwareLanguageManager implements SoftwareLanguageService {
 
 	@Autowired

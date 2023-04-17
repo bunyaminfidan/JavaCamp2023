@@ -15,16 +15,16 @@ import com.example.codeWriteNow.business.requests.LanguageSubtitlies.UpdateLangu
 import com.example.codeWriteNow.business.responses.LanguageSubtitlies.GetAllLanguageSubtitleResponse;
 import com.example.codeWriteNow.business.responses.LanguageSubtitlies.GetByIdLanguageSubtitleResponse;
 
+import lombok.AllArgsConstructor;
+
 @RestController
 @RequestMapping("/api/languagesubtitlies")
+@AllArgsConstructor
 public class LanguageSubtitleControllers {
 
 	private LanguageSubtitleService service;
 
-	public LanguageSubtitleControllers(LanguageSubtitleService service) {
-		super();
-		this.service = service;
-	}
+
 
 	@GetMapping("/getall")
 	public List<GetAllLanguageSubtitleResponse> getAll() {
