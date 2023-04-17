@@ -2,16 +2,17 @@ package com.example.codeWriteNow.business.concretes;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.codeWriteNow.business.abstracts.SoftwareLanguageService;
-import com.example.codeWriteNow.business.requests.SoftwareLanguages.CreateSoftwareLanguage;
-import com.example.codeWriteNow.business.requests.SoftwareLanguages.DeleteSoftwareLanguage;
-import com.example.codeWriteNow.business.requests.SoftwareLanguages.UpdateSoftwareLanguage;
-import com.example.codeWriteNow.business.responses.SoftwareLanguages.GetAllSoftwareLanguage;
-import com.example.codeWriteNow.business.responses.SoftwareLanguages.GetByIdSoftwareLanguage;
+import com.example.codeWriteNow.business.requests.SoftwareLanguages.CreateSoftwareLanguageRequest;
+import com.example.codeWriteNow.business.requests.SoftwareLanguages.DeleteSoftwareLanguageRequest;
+import com.example.codeWriteNow.business.requests.SoftwareLanguages.UpdateSoftwareLanguageRequest;
+import com.example.codeWriteNow.business.responses.SoftwareLanguages.GetAllSoftwareLanguageResponse;
+import com.example.codeWriteNow.business.responses.SoftwareLanguages.GetByIdSoftwareLanguageResponse;
 import com.example.codeWriteNow.entities.SoftwareLanguage;
 import com.example.codeWriteNow.repositories.abstracts.SoftwareLanguageRepository;
 
@@ -22,18 +23,23 @@ public class SoftwareLanguageManager implements SoftwareLanguageService {
 	private SoftwareLanguageRepository languageRepository;
 
 	@Override
-	public List<GetAllSoftwareLanguage> getAll() {
+	public List<GetAllSoftwareLanguageResponse> getAll() {
 
-		List<SoftwareLanguage> softwareLanguages = languageRepository.findAll();
-		List<GetAllSoftwareLanguage> getAllSoftwareLanguages = new ArrayList<GetAllSoftwareLanguage>();
+		Optional<List<SoftwareLanguage>> optional = Optional.of(languageRepository.findAll());
 
-		for (SoftwareLanguage softwareLanguage : softwareLanguages) {
-			GetAllSoftwareLanguage allSoftwareLanguage = new GetAllSoftwareLanguage();
+		List<GetAllSoftwareLanguageResponse> getAllSoftwareLanguages = new ArrayList<GetAllSoftwareLanguageResponse>();
 
-			allSoftwareLanguage.setId(softwareLanguage.getId());
-			allSoftwareLanguage.setName(softwareLanguage.getName());
+		if (optional.isPresent()) {
 
-			getAllSoftwareLanguages.add(allSoftwareLanguage);
+			var result = optional.get();
+
+			result.forEach(softwareLanguage -> {
+				GetAllSoftwareLanguageResponse getAllSoftwareLanguage = GetAllSoftwareLanguageResponse.builder()
+						.id(softwareLanguage.getId()).name(softwareLanguage.getName()).build();
+
+				getAllSoftwareLanguages.add(getAllSoftwareLanguage);
+
+			});
 
 		}
 
@@ -42,19 +48,21 @@ public class SoftwareLanguageManager implements SoftwareLanguageService {
 	}
 
 	@Override
-	public GetByIdSoftwareLanguage getById(int id) {
-		SoftwareLanguage language = new SoftwareLanguage();
-		language = languageRepository.getById(id);
-		
-		GetByIdSoftwareLanguage getByIdSoftwareLanguage = new GetByIdSoftwareLanguage();
-		getByIdSoftwareLanguage.setId(language.getId());
-		getByIdSoftwareLanguage.setName(language.getName());
+	public GetByIdSoftwareLanguageResponse getById(int id) {
+		Optional<SoftwareLanguage> optional = languageRepository.findById(id);
 
+		GetByIdSoftwareLanguageResponse getByIdSoftwareLanguage = new GetByIdSoftwareLanguageResponse();
+		if (optional.isPresent()) {
+
+			getByIdSoftwareLanguage.setId(optional.get().getId());
+			getByIdSoftwareLanguage.setName(optional.get().getName());
+
+		}
 		return getByIdSoftwareLanguage;
 	}
 
 	@Override
-	public void add(CreateSoftwareLanguage createSoftwareLanguage) {
+	public void add(CreateSoftwareLanguageRequest createSoftwareLanguage) {
 
 		SoftwareLanguage language = new SoftwareLanguage();
 		language.setName(createSoftwareLanguage.getName());
@@ -64,28 +72,32 @@ public class SoftwareLanguageManager implements SoftwareLanguageService {
 	}
 
 	@Override
-	public void delete(DeleteSoftwareLanguage deleteSoftwareLanguage) {
-		SoftwareLanguage language = new SoftwareLanguage();
-		language.setId(deleteSoftwareLanguage.getId());
+	public void delete(DeleteSoftwareLanguageRequest deleteSoftwareLanguage) {
+		Optional<SoftwareLanguage> optional = languageRepository.findById(deleteSoftwareLanguage.getId());
 
-		languageRepository.delete(language);
-	}
+		if (optional.isPresent()) {
+			SoftwareLanguage language = SoftwareLanguage.builder().id(deleteSoftwareLanguage.getId()).build();
+			// language.setId(deleteSoftwareLanguage.getId());
 
-	@Override
-	public void update(UpdateSoftwareLanguage updateSoftwareLanguage) {
-		SoftwareLanguage language = new SoftwareLanguage();
-		language.setId(updateSoftwareLanguage.getId());
-		language.setName(updateSoftwareLanguage.getName());
-
-		if ((languageRepository.findById(updateSoftwareLanguage.getId())).isEmpty() == false) {
-
-			languageRepository.save(language);
+			languageRepository.delete(language);
 		}
 
 	}
 
-	
+	@Override
+	public void update(UpdateSoftwareLanguageRequest updateSoftwareLanguage) {
 
+		Optional<SoftwareLanguage> languageOptional = languageRepository.findById(updateSoftwareLanguage.getId());
 
-	
+		if (languageOptional.isPresent()) {
+
+			var languageRequest = languageOptional.get();
+
+			languageRequest.setName(updateSoftwareLanguage.getName());
+
+			languageRepository.save(languageRequest);
+		}
+
+	}
+
 }

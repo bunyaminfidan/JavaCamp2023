@@ -2,22 +2,22 @@ package com.example.codeWriteNow.business.abstracts;
 
 import java.util.List;
 
-import com.example.codeWriteNow.business.requests.SoftwareLanguages.CreateSoftwareLanguage;
-import com.example.codeWriteNow.business.requests.SoftwareLanguages.DeleteSoftwareLanguage;
-import com.example.codeWriteNow.business.requests.SoftwareLanguages.UpdateSoftwareLanguage;
-import com.example.codeWriteNow.business.responses.SoftwareLanguages.GetAllSoftwareLanguage;
-import com.example.codeWriteNow.business.responses.SoftwareLanguages.GetByIdSoftwareLanguage;
+import com.example.codeWriteNow.business.requests.SoftwareLanguages.CreateSoftwareLanguageRequest;
+import com.example.codeWriteNow.business.requests.SoftwareLanguages.DeleteSoftwareLanguageRequest;
+import com.example.codeWriteNow.business.requests.SoftwareLanguages.UpdateSoftwareLanguageRequest;
+import com.example.codeWriteNow.business.responses.SoftwareLanguages.GetAllSoftwareLanguageResponse;
+import com.example.codeWriteNow.business.responses.SoftwareLanguages.GetByIdSoftwareLanguageResponse;
 
 public interface SoftwareLanguageService {
 
-	List<GetAllSoftwareLanguage> getAll();
+	List<GetAllSoftwareLanguageResponse> getAll();
 
-	GetByIdSoftwareLanguage getById(int id);
+	GetByIdSoftwareLanguageResponse getById(int id);
 
-	public void add(CreateSoftwareLanguage createSoftwareLanguage);
+	public void add(CreateSoftwareLanguageRequest createSoftwareLanguage);
 
-	public void delete(DeleteSoftwareLanguage deleteSoftwareLanguage);
+	public void delete(DeleteSoftwareLanguageRequest deleteSoftwareLanguage);
 
-	public void update(UpdateSoftwareLanguage updateSoftwareLanguage);
+	public void update(UpdateSoftwareLanguageRequest updateSoftwareLanguage);
 
 }

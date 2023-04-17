@@ -1,13 +1,13 @@
-package com.example.codeWriteNow.business.responses.SoftwareLanguages;
+package com.example.codeWriteNow.business.requests.SoftwareLanguages;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
-public class GetByIdSoftwareLanguage {
+@NoArgsConstructor
+public class UpdateSoftwareLanguageRequest {
 
 	private int id;
 	private String name;
