@@ -3,6 +3,7 @@ package com.example.codeWriteNow.business.concretes;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,6 +14,7 @@ import com.example.codeWriteNow.business.requests.SoftwareLanguages.DeleteSoftwa
 import com.example.codeWriteNow.business.requests.SoftwareLanguages.UpdateSoftwareLanguageRequest;
 import com.example.codeWriteNow.business.responses.SoftwareLanguages.GetAllSoftwareLanguageResponse;
 import com.example.codeWriteNow.business.responses.SoftwareLanguages.GetByIdSoftwareLanguageResponse;
+import com.example.codeWriteNow.common.utilities.mapper.ModelMapperService;
 import com.example.codeWriteNow.entities.SoftwareLanguage;
 import com.example.codeWriteNow.repositories.abstracts.SoftwareLanguageRepository;
 
@@ -24,51 +26,37 @@ public class SoftwareLanguageManager implements SoftwareLanguageService {
 
 	@Autowired
 	private SoftwareLanguageRepository languageRepository;
+	private ModelMapperService modelMapperService;
 
 	@Override
 	public List<GetAllSoftwareLanguageResponse> getAll() {
 
 		Optional<List<SoftwareLanguage>> optional = Optional.of(languageRepository.findAll());
 
-		List<GetAllSoftwareLanguageResponse> getAllSoftwareLanguages = new ArrayList<GetAllSoftwareLanguageResponse>();
+		List<GetAllSoftwareLanguageResponse> getAllResponse = optional.get().stream().map(
+				language -> this.modelMapperService.forResponse().map(language, GetAllSoftwareLanguageResponse.class))
+				.collect(Collectors.toList());
 
-		if (optional.isPresent()) {
-
-			var result = optional.get();
-
-			result.forEach(softwareLanguage -> {
-				GetAllSoftwareLanguageResponse getAllSoftwareLanguage = GetAllSoftwareLanguageResponse.builder()
-						.id(softwareLanguage.getId()).name(softwareLanguage.getName()).build();
-
-				getAllSoftwareLanguages.add(getAllSoftwareLanguage);
-
-			});
-
-		}
-
-		return getAllSoftwareLanguages;
+		return getAllResponse;
 
 	}
 
 	@Override
 	public GetByIdSoftwareLanguageResponse getById(int id) {
+
 		Optional<SoftwareLanguage> optional = languageRepository.findById(id);
 
-		GetByIdSoftwareLanguageResponse getByIdSoftwareLanguage = new GetByIdSoftwareLanguageResponse();
-		if (optional.isPresent()) {
+		GetByIdSoftwareLanguageResponse getResponse = this.modelMapperService.forResponse().map(optional.get(),
+				GetByIdSoftwareLanguageResponse.class);
 
-			getByIdSoftwareLanguage.setId(optional.get().getId());
-			getByIdSoftwareLanguage.setName(optional.get().getName());
-
-		}
-		return getByIdSoftwareLanguage;
+		return getResponse;
 	}
 
 	@Override
 	public void add(CreateSoftwareLanguageRequest createSoftwareLanguage) {
 
-		SoftwareLanguage language = new SoftwareLanguage();
-		language.setName(createSoftwareLanguage.getName());
+		SoftwareLanguage language = this.modelMapperService.forRequest().map(createSoftwareLanguage,
+				SoftwareLanguage.class);
 
 		languageRepository.save(language);
 
@@ -79,8 +67,8 @@ public class SoftwareLanguageManager implements SoftwareLanguageService {
 		Optional<SoftwareLanguage> optional = languageRepository.findById(deleteSoftwareLanguage.getId());
 
 		if (optional.isPresent()) {
-			SoftwareLanguage language = SoftwareLanguage.builder().id(deleteSoftwareLanguage.getId()).build();
-			// language.setId(deleteSoftwareLanguage.getId());
+			SoftwareLanguage language = this.modelMapperService.forRequest().map(deleteSoftwareLanguage,
+					SoftwareLanguage.class);
 
 			languageRepository.delete(language);
 		}
@@ -93,12 +81,10 @@ public class SoftwareLanguageManager implements SoftwareLanguageService {
 		Optional<SoftwareLanguage> languageOptional = languageRepository.findById(updateSoftwareLanguage.getId());
 
 		if (languageOptional.isPresent()) {
+			SoftwareLanguage language = this.modelMapperService.forRequest().map(updateSoftwareLanguage,
+					SoftwareLanguage.class);
 
-			var languageRequest = languageOptional.get();
-
-			languageRequest.setName(updateSoftwareLanguage.getName());
-
-			languageRepository.save(languageRequest);
+			languageRepository.save(language);
 		}
 
 	}

@@ -10,7 +10,6 @@ import com.example.codeWriteNow.business.abstracts.LanguageSubtitleService;
 import com.example.codeWriteNow.business.requests.LanguageSubtitlies.CreateLanguageSubtitleRequest;
 import com.example.codeWriteNow.business.requests.LanguageSubtitlies.DeleteLanguageSubtitleRequest;
 import com.example.codeWriteNow.business.requests.LanguageSubtitlies.UpdateLanguageSubtitleRequest;
-import com.example.codeWriteNow.business.requests.SoftwareLanguages.DeleteSoftwareLanguageRequest;
 import com.example.codeWriteNow.business.responses.LanguageSubtitlies.GetAllLanguageSubtitleResponse;
 import com.example.codeWriteNow.business.responses.LanguageSubtitlies.GetByIdLanguageSubtitleResponse;
 import com.example.codeWriteNow.business.responses.SoftwareLanguages.GetAllSoftwareLanguageResponse;
@@ -62,12 +61,12 @@ public class LanguageSubtitleManager implements LanguageSubtitleService {
 	@Override
 	public GetByIdLanguageSubtitleResponse getById(int id) {
 
-		Optional<LanguageSubtitle> optional = subtitleRepository.findById(id);
+		Optional<LanguageSubtitle> languageSubtitle = subtitleRepository.findById(id);
 		GetByIdLanguageSubtitleResponse getByIdLanguageSubtitleResponse = new GetByIdLanguageSubtitleResponse();
 
-		if (optional.isPresent()) {
+		if (languageSubtitle.isPresent()) {
 
-			var request = optional.get();
+			var request = languageSubtitle.get();
 
 			getByIdLanguageSubtitleResponse = GetByIdLanguageSubtitleResponse.builder().id(request.getId())
 					.name(request.getName())
